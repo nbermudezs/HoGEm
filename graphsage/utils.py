@@ -1,6 +1,7 @@
 from __future__ import print_function
 
 import numpy as np
+import pandas as pd
 import random
 import json
 import sys
@@ -72,7 +73,13 @@ def load_data(prefix, normalize=True, load_walks=False):
             for line in fp:
                 walks.append(map(conversion, line.split()))
 
-    return G, feats, id_map, walks, class_map
+    _homologs = pd.read_csv(prefix + "-homologs.txt",
+                           sep='\t', header=None, names=['human', 'yeast'])
+    # homologs = {}
+    # for _, row in _homologs.iterrows():
+    #     homologs[row['human']] = row['yeast']
+    #     homologs[row['yeast']] = row['human']
+    return G, feats, id_map, walks, class_map, _homologs
 
 def run_random_walks(G, nodes, num_walks=N_WALKS):
     pairs = []

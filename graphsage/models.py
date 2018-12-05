@@ -191,7 +191,7 @@ class SampleAndAggregate(GeneralizedModel):
 
     def __init__(self, placeholders, features, adj, degrees,
             layer_infos, concat=True, aggregator_type="mean", 
-            model_size="small", identity_dim=0,
+            model_size="small", identity_dim=0, homolog_loss="mse",
             **kwargs):
         '''
         Args:
@@ -248,6 +248,7 @@ class SampleAndAggregate(GeneralizedModel):
         self.layer_infos = layer_infos
 
         self.optimizer = tf.train.AdamOptimizer(learning_rate=FLAGS.learning_rate)
+        self.homolog_loss_type = homolog_loss
 
         self.build()
 
@@ -376,6 +377,10 @@ class SampleAndAggregate(GeneralizedModel):
         self._loss()
         self._accuracy()
         self.loss = self.loss / tf.cast(self.batch_size, tf.float32)
+        if self.homolog_loss_type == "mse":
+            self.loss += tf.reduce_sum((self.outputs1[-100:-50, :] - self.outputs1[-50:, :]) ** 2.)
+        elif self.homolog_loss_type == "cross":
+            self.loss += tf.reduce_sum(tf.multiply(self.outputs1[-100:-50, :], self.outputs1[-50:, :]))
         grads_and_vars = self.optimizer.compute_gradients(self.loss)
         clipped_grads_and_vars = [(tf.clip_by_value(grad, -5.0, 5.0) if grad is not None else None, var) 
                 for grad, var in grads_and_vars]
@@ -387,7 +392,7 @@ class SampleAndAggregate(GeneralizedModel):
             for var in aggregator.vars.values():
                 self.loss += FLAGS.weight_decay * tf.nn.l2_loss(var)
 
-        self.loss += self.link_pred_layer.loss(self.outputs1, self.outputs2, self.neg_outputs) 
+        self.loss += self.link_pred_layer.loss(self.outputs1, self.outputs2, self.neg_outputs)
         tf.summary.scalar('loss', self.loss)
 
     def _accuracy(self):
