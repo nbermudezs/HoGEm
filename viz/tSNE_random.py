@@ -7,10 +7,7 @@ __status__ = "Development"
 
 import matplotlib.pyplot as plt
 import numpy as np
-import os
-import pandas as pd
 import tensorflow as tf
-from sklearn.manifold import TSNE
 
 flags = tf.flags
 FLAGS = flags.FLAGS
