@@ -21,6 +21,11 @@ To guarantee that you have the right package versions, you can use [docker](http
 The `paper_experiments.sh` bash script contains all the commands needed to reproduce the results
 described in our paper.
 
+#### The data
+If you would like to preprocess the raw data on your own feel free to download 
+the data files from [here](https://uofi.box.com/s/dn1bee23v4sey1t1ilz643jhfvmh7x4n). On the other hand, if you just want to use the data used for our experiments,
+just download the processed files from [this Box folder](https://uofi.box.com/s/c0t6c16ld1uki4khymv8drzw68thitvd).
+
 #### Input format
 As input, at minimum the code requires that a --train_prefix option is specified which specifies the following data files:
 
