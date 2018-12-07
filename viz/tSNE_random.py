@@ -13,12 +13,7 @@ flags = tf.flags
 FLAGS = flags.FLAGS
 
 flags.DEFINE_string("embeddings_dir", None, "Path to the embeddings dir")
-flags.DEFINE_integer("n_components", 2, "Number of components for tSNE")
 flags.DEFINE_string("plot_filename", None, "Where to save the plot")
-flags.DEFINE_string("homologs", "cge/ppi-homologs.txt",
-                    "File containing the homolog adjacency")
-flags.DEFINE_integer("n_points", 100,
-                     "Points per organism to be plotted")
 
 
 def main(_):
