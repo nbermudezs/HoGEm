@@ -23,13 +23,7 @@ described in our paper.
 
 #### The data
 If you would like to preprocess the raw data on your own feel free to use the *raw_data.zip* in this repo. 
-If you decide to run the preprocessing step make sure to call `utils/preprocess.py` with the appropriate
-parameters. 
-
-```bash
-python utils/preprocess.py --help
-```
-should tell you which parameters you need to specify.
+All the steps needed to process the raw data can be seen in *preprocess.sh*.
 
 On the other hand, if you just want to use the data used for our experiments,
 just download the processed files from [this Box folder](https://uofi.box.com/s/c0t6c16ld1uki4khymv8drzw68thitvd).
