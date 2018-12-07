@@ -88,8 +88,7 @@ if __name__ == '__main__':
                        names=['human', 'yeast'])
     data['yeast'] = data['yeast'] + OFFSET
     data.to_csv(homolog_root + '/human-yeast_corrected.txt', sep='\t', header=None, index=False)
-    import pdb; pdb.set_trace()
-    human_annotations_path = FLAGS.annotations_dir + '/human/reduced_adjacency.txt'
+    human_annotations_path = FLAGS.annotations_dir + '/human/reduced_adjacency-22.txt'
     human_annotations = pd.read_csv(human_annotations_path, sep='\t', header=None, names=['gene', 'GO'])
 
     yeast_annotations_path = FLAGS.annotations_dir + '/yeast/yeast_mips_level1_adjacency.txt'
