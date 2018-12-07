@@ -30,6 +30,7 @@ flags.DEFINE_float('learning_rate', 0.00001, 'initial learning rate.')
 flags.DEFINE_string("model_size", "small", "Can be big or small; model specific def'ns")
 flags.DEFINE_string('train_prefix', '', 'name of the object file that stores the training data. must be specified.')
 flags.DEFINE_string("homolog_loss", "mse", "Type of loss between homolog embeddings")
+flags.DEFINE_float('homolog_importance', 1., "Weight to assign to the homolog loss")
 
 # left to default values in main experiments 
 flags.DEFINE_integer('epochs', 1, 'number of epochs to train.')
@@ -167,6 +168,7 @@ def train(train_data, test_data=None):
                                      model_size=FLAGS.model_size,
                                      identity_dim = FLAGS.identity_dim,
                                      homolog_loss=FLAGS.homolog_loss,
+                                     homolog_importance=FLAGS.homolog_importance,
                                      logging=True)
     elif FLAGS.model == 'gcn':
         # Create model
@@ -183,6 +185,7 @@ def train(train_data, test_data=None):
                                      model_size=FLAGS.model_size,
                                      identity_dim = FLAGS.identity_dim,
                                      homolog_loss=FLAGS.homolog_loss,
+                                     homolog_importance=FLAGS.homolog_importance,
                                      concat=False,
                                      logging=True)
 
@@ -200,6 +203,7 @@ def train(train_data, test_data=None):
                                      aggregator_type="seq",
                                      model_size=FLAGS.model_size,
                                      homolog_loss=FLAGS.homolog_loss,
+                                     homolog_importance=FLAGS.homolog_importance,
                                      logging=True)
 
     elif FLAGS.model == 'graphsage_maxpool':
@@ -216,6 +220,7 @@ def train(train_data, test_data=None):
                                      model_size=FLAGS.model_size,
                                      identity_dim = FLAGS.identity_dim,
                                      homolog_loss=FLAGS.homolog_loss,
+                                     homolog_importance=FLAGS.homolog_importance,
                                      logging=True)
     elif FLAGS.model == 'graphsage_meanpool':
         sampler = UniformNeighborSampler(adj_info)
@@ -231,6 +236,7 @@ def train(train_data, test_data=None):
                                      model_size=FLAGS.model_size,
                                      identity_dim = FLAGS.identity_dim,
                                      homolog_loss=FLAGS.homolog_loss,
+                                     homolog_importance=FLAGS.homolog_importance,
                                      logging=True)
 
     elif FLAGS.model == 'n2v':

@@ -192,6 +192,7 @@ class SampleAndAggregate(GeneralizedModel):
     def __init__(self, placeholders, features, adj, degrees,
             layer_infos, concat=True, aggregator_type="mean", 
             model_size="small", identity_dim=0, homolog_loss="mse",
+            homolog_importance=1.,
             **kwargs):
         '''
         Args:
@@ -381,6 +382,8 @@ class SampleAndAggregate(GeneralizedModel):
             self.loss += tf.reduce_sum((self.outputs1[-100:-50, :] - self.outputs1[-50:, :]) ** 2.)
         elif self.homolog_loss_type == "cross":
             self.loss += tf.reduce_sum(tf.multiply(self.outputs1[-100:-50, :], self.outputs1[-50:, :]))
+        elif self.homolog_loss_type == "dot":
+            self.loss -= 1000 * tf.reduce_sum(tf.tensordot(self.outputs1[-100:-50, :], self.outputs1[-50:, :]))
         grads_and_vars = self.optimizer.compute_gradients(self.loss)
         clipped_grads_and_vars = [(tf.clip_by_value(grad, -5.0, 5.0) if grad is not None else None, var) 
                 for grad, var in grads_and_vars]
