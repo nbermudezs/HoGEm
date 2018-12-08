@@ -26,7 +26,7 @@ If you would like to preprocess the raw data on your own feel free to use the *r
 All the steps needed to process the raw data can be seen in *preprocess.sh*.
 
 On the other hand, if you just want to use the data used for our experiments,
-just download the processed files from [this Box folder](https://uofi.box.com/s/c0t6c16ld1uki4khymv8drzw68thitvd).
+just decompress the *processed_data.zip* found in this repo.
 
 #### Input format
 As input, at minimum the code requires that a --train_prefix option is specified which specifies the following data files:
@@ -50,6 +50,9 @@ The user must also specify a --model, the variants of which are described in det
 * graphsage_meanpool -- GraphSage with mean-pooling aggregator (a variant of the pooling aggregator, where the element-wie mean replaces the element-wise max).
 * gcn -- GraphSage with GCN-based aggregator
 * n2v -- an implementation of [DeepWalk](https://arxiv.org/abs/1403.6652) (called n2v for short in the code.)
+
+Given the reported performance by Hamilton et. al, all experiments on this work are based on graphsage-maxpool.
+These experiments, and the subsequence analysis of the results can be found in *paper_experiments.sh*.
 
 #### Logging directory
 Finally, a --base_log_dir should be specified (it defaults to the current directory).
