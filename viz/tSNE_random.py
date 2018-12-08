@@ -29,7 +29,7 @@ def main(_):
 
     human, yeast = None, None
 
-    for k in range(100):
+    for k in range(200):
         human_indices = np.random.choice(range(human_embs.shape[0]), FLAGS.n_points)
         yeast_indices = np.random.choice(range(yeast_embs.shape[0]), FLAGS.n_points)
 
