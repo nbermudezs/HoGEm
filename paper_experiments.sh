@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 
+if [ ! -d mse-homolog-loss ]; then
 mkdir mse-homolog-loss
+fi
 
 # MSE homolog loss
-if [ ! -d mse-homolog-loss/mse_b512_e20 ]; then
+if [ ! -f mse-homolog-loss/mse_b512_e20/val.npy ]; then
 echo 'MSE homolog loss with batch_size 512'
 python -m graphsage.unsupervised_train --train_prefix ./cge/ppi --homolog_loss mse \
     --model graphsage_maxpool --max_total_steps 100000000000 --epochs 10 --validate_iter 10 \
@@ -14,7 +16,7 @@ rm -rf unsup-cge
 echo 'Embeddings have been saved to mse-homolog-loss/mse_b512_e20'
 fi
 
-if [ ! -d mse-homolog-loss/mse_b256_e20 ]; then
+if [ ! -f mse-homolog-loss/mse_b256_e20/val.npy ]; then
 echo 'MSE homolog loss with batch_size 256'
 python -m graphsage.unsupervised_train --train_prefix ./cge/ppi --homolog_loss mse \
     --model graphsage_maxpool --batch_size 256 --max_total_steps 100000000000 --epochs 10 \
@@ -31,7 +33,7 @@ mkdir cross-homolog-loss
 fi
 
 # dot product homolog loss
-if [ ! -d cross-homolog-loss/cross_b512_e20 ]; then
+if [ ! -f cross-homolog-loss/cross_b512_e20/val.npy ]; then
 echo 'cross product homolog loss with batch_size 512'
 python -m graphsage.unsupervised_train --train_prefix ./cge/ppi --homolog_loss cross \
     --model graphsage_maxpool --max_total_steps 100000000000 --epochs 10 --validate_iter 10 \
@@ -44,7 +46,7 @@ fi
 
 
 # dot product homolog loss
-if [ ! -d cross-homolog-loss/cross_b256_e20 ]; then
+if [ ! -f cross-homolog-loss/cross_b256_e20/val.npy ]; then
 echo 'cross product homolog loss with batch_size 256'
 python -m graphsage.unsupervised_train --train_prefix ./cge/ppi --homolog_loss cross \
     --model graphsage_maxpool --batch_size 256 --max_total_steps 100000000000 --epochs 10 \
@@ -60,7 +62,7 @@ mkdir dot-homolog-loss
 fi
 
 # dot product homolog loss
-if [ ! -d dot-homolog-loss/dot_b512_e20 ]; then
+if [ ! -f dot-homolog-loss/dot_b512_e20/val.npy ]; then
 echo 'dot product homolog loss with batch_size 512'
 python -m graphsage.unsupervised_train --train_prefix ./cge/ppi --homolog_loss dot \
     --model graphsage_maxpool --max_total_steps 100000000000 --epochs 10 --validate_iter 10 \
@@ -73,7 +75,7 @@ fi
 
 
 # dot product homolog loss
-if [ ! -d dot-homolog-loss/dot_b256_e20 ]; then
+if [ ! -f dot-homolog-loss/dot_b256_e20/val.npy ]; then
 echo 'dot product homolog loss with batch_size 256'
 python -m graphsage.unsupervised_train --train_prefix ./cge/ppi --homolog_loss dot \
     --model graphsage_maxpool --batch_size 256 --max_total_steps 100000000000 --epochs 10 \
@@ -86,7 +88,7 @@ fi
 
 
 # dot product homolog loss
-if [ ! -d dot-homolog-loss/dot_b512_e20_hi1000 ]; then
+if [ ! -f dot-homolog-loss/dot_b512_e20_hi1000/val.npy ]; then
 echo 'dot product homolog loss with homolog importance set to 1000'
 python -m graphsage.unsupervised_train --train_prefix ./cge/ppi --homolog_loss dot \
     --model graphsage_maxpool --batch_size 512 --max_total_steps 100000000000 --epochs 10 \
