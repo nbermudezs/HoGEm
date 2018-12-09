@@ -102,34 +102,65 @@ fi
 
 
 ##### SPLIT EMBEDDINGS PER ORGANISM #####
+if [ ! -f mse-homolog-loss/mse_b512_e20/embs_human.npy ]; then
 python -m utils.split_embeddings --embeddings_path mse-homolog-loss/mse_b512_e20/val.npy \
     --output_dir mse-homolog-loss/mse_b512_e20
+fi
+if [ ! -f mse-homolog-loss/mse_b256_e20/embs_human.npy ]; then
 python -m utils.split_embeddings --embeddings_path mse-homolog-loss/mse_b256_e20/val.npy \
     --output_dir mse-homolog-loss/mse_b256_e20
+fi
+if [ ! -f cross-homolog-loss/cross_b512_e20/embs_human.npy ]; then
 python -m utils.split_embeddings --embeddings_path cross-homolog-loss/cross_b512_e20/val.npy \
     --output_dir cross-homolog-loss/cross_b512_e20
+fi
+if [ ! -f cross-homolog-loss/cross_b256_e20/embs_human.npy ]; then
 python -m utils.split_embeddings --embeddings_path cross-homolog-loss/cross_b256_e20/val.npy \
     --output_dir cross-homolog-loss/cross_b256_e20
+fi
+if [ ! -f dot-homolog-loss/dot_b512_e20/embs_human.npy ]; then
 python -m utils.split_embeddings --embeddings_path dot-homolog-loss/dot_b512_e20/val.npy \
     --output_dir dot-homolog-loss/dot_b512_e20
+fi
+if [ ! -f dot-homolog-loss/dot_b256_e20/embs_human.npy ]; then
 python -m utils.split_embeddings --embeddings_path dot-homolog-loss/dot_b256_e20/val.npy \
     --output_dir dot-homolog-loss/dot_b256_e20
+fi
+if [ ! -f dot-homolog-loss/dot_b512_e20_hi1000/embs_human.npy ]; then
 python -m utils.split_embeddings --embeddings_path dot-homolog-loss/dot_b512_e20_hi1000/val.npy \
     --output_dir dot-homolog-loss/dot_b512_e20_hi1000
+fi
 
 
 ##### COMPUTE 2D tSNE EMBEDDINGS #####
+if [ ! -f mse-homolog-loss/mse_b512_e20/embs_human-tSNE_2D.npy ]; then
 python -m utils.tSNE_reduce --embeddings_dir mse-homolog-loss/mse_b512_e20
+fi
+if [ ! -f mse-homolog-loss/mse_b256_e20/embs_human-tSNE_2D.npy ]; then
 python -m utils.tSNE_reduce --embeddings_dir mse-homolog-loss/mse_b256_e20
+fi
+if [ ! -f cross-homolog-loss/cross_b512_e20/embs_human-tSNE_2D.npy ]; then
 python -m utils.tSNE_reduce --embeddings_dir cross-homolog-loss/cross_b512_e20
+fi
+if [ ! -f cross-homolog-loss/cross_b256_e20/embs_human-tSNE_2D.npy ]; then
 python -m utils.tSNE_reduce --embeddings_dir cross-homolog-loss/cross_b256_e20
+fi
+if [ ! -f dot-homolog-loss/dot_b512_e20/embs_human-tSNE_2D.npy ]; then
 python -m utils.tSNE_reduce --embeddings_dir dot-homolog-loss/dot_b512_e20
+fi
+if [ ! -f dot-homolog-loss/dot_b256_e20/embs_human-tSNE_2D.npy ]; then
 python -m utils.tSNE_reduce --embeddings_dir dot-homolog-loss/dot_b256_e20
+fi
+if [ ! -f dot-homolog-loss/dot_b512_e20_hi1000/embs_human-tSNE_2D.npy ]; then
 python -m utils.tSNE_reduce --embeddings_dir dot-homolog-loss/dot_b512_e20_hi1000
+fi
 
 
 ##### CREATING t-SNE VISUALIZATIONS #####
 # homologs
+if [ -f summary.txt ]; then
+    rm summary.txt
+fi
 python -m viz.tSNE_homolog --embeddings_dir mse-homolog-loss/mse_b512_e20 >> summary.txt
 python -m viz.tSNE_homolog --embeddings_dir mse-homolog-loss/mse_b256_e20 >> summary.txt
 python -m viz.tSNE_homolog --embeddings_dir cross-homolog-loss/cross_b512_e20 >> summary.txt
@@ -159,116 +190,169 @@ python -m viz.tSNE_all --embeddings_dir dot-homolog-loss/dot_b512_e20_hi1000
 
 
 ##### PREPARE FOR CLASSIFIER TRAINING #####
+if [ ! -f mse-homolog-loss/mse_b512_e20/c22/human-features.npy ]; then
 python -m utils.prepare_for_classifier --organism human \
     --labels_filepath cge/reduced_adjacency-22.txt \
     --embeddings_filepath mse-homolog-loss/mse_b512_e20/embs_human.npy \
     --output_dir mse-homolog-loss/mse_b512_e20/c22
+fi
 
+if [ ! -f mse-homolog-loss/mse_b512_e20/c211/human-features.npy ]; then
 python -m utils.prepare_for_classifier --organism human \
     --labels_filepath cge/reduced_adjacency-211.txt \
     --embeddings_filepath mse-homolog-loss/mse_b512_e20/embs_human.npy \
     --output_dir mse-homolog-loss/mse_b512_e20/c211
+fi
 
 
-
-
+if [ ! -f mse-homolog-loss/mse_b256_e20/c22/human-features.npy ]; then
 python -m utils.prepare_for_classifier --organism human \
     --labels_filepath cge/reduced_adjacency-22.txt \
     --embeddings_filepath mse-homolog-loss/mse_b256_e20/embs_human.npy \
     --output_dir mse-homolog-loss/mse_b256_e20/c22
+fi
 
+if [ ! -f mse-homolog-loss/mse_b256_e20/c211/human-features.npy ]; then
 python -m utils.prepare_for_classifier --organism human \
     --labels_filepath cge/reduced_adjacency-211.txt \
     --embeddings_filepath mse-homolog-loss/mse_b256_e20/embs_human.npy \
     --output_dir mse-homolog-loss/mse_b256_e20/c211
+fi
 
 
 
-
+if [ ! -f cross-homolog-loss/cross_b512_e20/c22/human-features.npy ]; then
 python -m utils.prepare_for_classifier --organism human \
     --labels_filepath cge/reduced_adjacency-22.txt \
     --embeddings_filepath cross-homolog-loss/cross_b512_e20/embs_human.npy \
     --output_dir cross-homolog-loss/cross_b512_e20/c22
+fi
 
+if [ ! -f cross-homolog-loss/cross_b512_e20/c211/human-features.npy ]; then
 python -m utils.prepare_for_classifier --organism human \
     --labels_filepath cge/reduced_adjacency-211.txt \
     --embeddings_filepath cross-homolog-loss/cross_b512_e20/embs_human.npy \
     --output_dir cross-homolog-loss/cross_b512_e20/c211
+fi
 
 
 
 
+if [ ! -f cross-homolog-loss/cross_b256_e20/c22/human-features.npy ]; then
 python -m utils.prepare_for_classifier --organism human \
     --labels_filepath cge/reduced_adjacency-22.txt \
     --embeddings_filepath cross-homolog-loss/cross_b256_e20/embs_human.npy \
     --output_dir cross-homolog-loss/cross_b256_e20/c22
+fi
 
+if [ ! -f cross-homolog-loss/cross_b256_e20/c211/human-features.npy ]; then
 python -m utils.prepare_for_classifier --organism human \
     --labels_filepath cge/reduced_adjacency-211.txt \
     --embeddings_filepath cross-homolog-loss/cross_b256_e20/embs_human.npy \
     --output_dir cross-homolog-loss/cross_b256_e20/c211
+fi
 
 
 
 
+if [ ! -f dot-homolog-loss/dot_b512_e20/c22/human-features.npy ]; then
 python -m utils.prepare_for_classifier --organism human \
     --labels_filepath cge/reduced_adjacency-22.txt \
     --embeddings_filepath dot-homolog-loss/dot_b512_e20/embs_human.npy \
     --output_dir dot-homolog-loss/dot_b512_e20/c22
+fi
 
+if [ ! -f dot-homolog-loss/dot_b512_e20/c211/human-features.npy ]; then
 python -m utils.prepare_for_classifier --organism human \
     --labels_filepath cge/reduced_adjacency-211.txt \
     --embeddings_filepath dot-homolog-loss/dot_b512_e20/embs_human.npy \
     --output_dir dot-homolog-loss/dot_b512_e20/c211
+fi
 
 
 
 
+if [ ! -f dot-homolog-loss/dot_b256_e20/c22/human-features.npy ]; then
 python -m utils.prepare_for_classifier --organism human \
     --labels_filepath cge/reduced_adjacency-22.txt \
     --embeddings_filepath dot-homolog-loss/dot_b256_e20/embs_human.npy \
     --output_dir dot-homolog-loss/dot_b256_e20/c22
+fi
 
+if [ ! -f dot-homolog-loss/dot_b256_e20/c211/human-features.npy ]; then
 python -m utils.prepare_for_classifier --organism human \
     --labels_filepath cge/reduced_adjacency-211.txt \
     --embeddings_filepath dot-homolog-loss/dot_b256_e20/embs_human.npy \
     --output_dir dot-homolog-loss/dot_b256_e20/c211
+fi
 
 
 
 
+if [ ! -f dot-homolog-loss/dot_b512_e20_hi1000/c22/human-features.npy ]; then
 python -m utils.prepare_for_classifier --organism human \
     --labels_filepath cge/reduced_adjacency-22.txt \
     --embeddings_filepath dot-homolog-loss/dot_b512_e20_hi1000/embs_human.npy \
     --output_dir dot-homolog-loss/dot_b512_e20_hi1000/c22
+fi
 
+if [ ! -f dot-homolog-loss/dot_b512_e20_hi1000/c211/human-features.npy ]; then
 python -m utils.prepare_for_classifier --organism human \
     --labels_filepath cge/reduced_adjacency-211.txt \
     --embeddings_filepath dot-homolog-loss/dot_b512_e20_hi1000/embs_human.npy \
     --output_dir dot-homolog-loss/dot_b512_e20_hi1000/c211
+fi
 
 
 ##### TRAINING CLASSIFIERS #####
+if [ ! -f mse-homolog-loss/mse_b512_e20/c22/clf_results.pkl ]; then
 python -m classifiers.logistic --input_dir mse-homolog-loss/mse_b512_e20/c22
+fi
+if [ ! -f mse-homolog-loss/mse_b512_e20/c211/clf_results.pkl ]; then
 python -m classifiers.logistic --input_dir mse-homolog-loss/mse_b512_e20/c211
+fi
 
+if [ ! -f dot-homolog-loss/dot_b512_e20_hi1000/c22/clf_results.pkl ]; then
 python -m classifiers.logistic --input_dir mse-homolog-loss/mse_b256_e20/c22
+fi
+if [ ! -f mse-homolog-loss/mse_b256_e20/c211/clf_results.pkl ]; then
 python -m classifiers.logistic --input_dir mse-homolog-loss/mse_b256_e20/c211
+fi
 
+if [ ! -f cross-homolog-loss/cross_b512_e20/c22/clf_results.pkl ]; then
 python -m classifiers.logistic --input_dir cross-homolog-loss/cross_b512_e20/c22
+fi
+if [ ! -f cross-homolog-loss/cross_b512_e20/c211/clf_results.pkl ]; then
 python -m classifiers.logistic --input_dir cross-homolog-loss/cross_b512_e20/c211
+fi
 
+if [ ! -f cross-homolog-loss/cross_b256_e20/c22/clf_results.pkl ]; then
 python -m classifiers.logistic --input_dir cross-homolog-loss/cross_b256_e20/c22
+fi
+if [ ! -f cross-homolog-loss/cross_b256_e20/c211/clf_results.pkl ]; then
 python -m classifiers.logistic --input_dir cross-homolog-loss/cross_b256_e20/c211
+fi
 
+if [ ! -f dot-homolog-loss/dot_b512_e20/c22/clf_results.pkl ]; then
 python -m classifiers.logistic --input_dir dot-homolog-loss/dot_b512_e20/c22
+fi
+if [ ! -f dot-homolog-loss/dot_b512_e20/c211/clf_results.pkl ]; then
 python -m classifiers.logistic --input_dir dot-homolog-loss/dot_b512_e20/c211
+fi
 
+if [ ! -f dot-homolog-loss/dot_b256_e20/c22/clf_results.pkl ]; then
 python -m classifiers.logistic --input_dir dot-homolog-loss/dot_b256_e20/c22
+fi
+if [ ! -f dot-homolog-loss/dot_b256_e20/c211/clf_results.pkl ]; then
 python -m classifiers.logistic --input_dir dot-homolog-loss/dot_b256_e20/c211
+fi
 
+if [ ! -f dot-homolog-loss/dot_b512_e20_hi1000/c22/clf_results.pkl ]; then
 python -m classifiers.logistic --input_dir dot-homolog-loss/dot_b512_e20_hi1000/c22
+fi
+if [ ! -f dot-homolog-loss/dot_b512_e20_hi1000/c211/clf_results.pkl ]; then
 python -m classifiers.logistic --input_dir dot-homolog-loss/dot_b512_e20_hi1000/c211
+fi
 
 
 ##### SUMMARIZING CLASSIFIERS PERFORMANCE #####
