@@ -14,6 +14,8 @@ FLAGS = flags.FLAGS
 
 flags.DEFINE_string("embeddings_dir", None, "Path to the embeddings dir")
 flags.DEFINE_string("plot_filename", None, "Where to save the plot")
+flags.DEFINE_integer("n_points", 100,
+                     "Points per organism to be plotted")
 
 
 def main(_):
