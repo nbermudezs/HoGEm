@@ -384,7 +384,7 @@ class SampleAndAggregate(GeneralizedModel):
         elif self.homolog_loss_type == "cross":
             self.loss += tf.reduce_sum(tf.multiply(self.outputs1[-100:-50, :], self.outputs1[-50:, :]))
         elif self.homolog_loss_type == "dot":
-            self.loss += self.homolog_importance * tf.losses.cosine_distance(self.outputs1[-100:-50, :], self.outputs1[-50:, :])
+            self.loss += self.homolog_importance * tf.reduce_sum(tf.losses.cosine_distance(self.outputs1[-100:-50, :], self.outputs1[-50:, :], axis=0))
         grads_and_vars = self.optimizer.compute_gradients(self.loss)
         clipped_grads_and_vars = [(tf.clip_by_value(grad, -5.0, 5.0) if grad is not None else None, var) 
                 for grad, var in grads_and_vars]
