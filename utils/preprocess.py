@@ -28,7 +28,7 @@ flags.DEFINE_string("networks_dir", "data/mashup/raw/networks/",
                     "Directory containing the different network adjacencies")
 flags.DEFINE_string("annotations_dir", "data/mashup/raw/annotations/",
                     "Directory containing the files to extract labels")
-flags.DEFINE_string("homologs_dir", "data/",
+flags.DEFINE_string("homologs_dir", "data/homologs",
                     "Directory containing the homolog file(s)")
 flags.DEFINE_string("output_dir", "cge/",
                     "Directory where the processed files will be stored")
@@ -75,6 +75,14 @@ def gene_class_map(gene, annotations, n_classes):
     return class_map.tolist()
 
 
+def use_file(file):
+    if not file.endswith('adjacency.txt'):
+        return False
+    # if 'coexpression' in file:
+    #     return False
+    return True
+
+
 if __name__ == '__main__':
     import os
     G = nx.Graph()
@@ -114,7 +122,7 @@ if __name__ == '__main__':
     node_id = 0
     node_id_set = set()
     for file in os.listdir(FLAGS.networks_dir + 'human'):
-        if not file.endswith('adjacency.txt'):
+        if not use_file(file):
             continue
         for i, gene in enumerate(range(n_human_genes)):
             node_id = '{}_{}'.format(network_id, gene)
@@ -129,7 +137,7 @@ if __name__ == '__main__':
 
     network_id = 0
     for file in os.listdir(FLAGS.networks_dir + 'yeast'):
-        if not file.endswith('adjacency.txt'):
+        if not use_file(file):
             continue
         for i, gene in enumerate(range(n_yeast_genes)):
             node_id = '{}_{}'.format(n_networks + network_id, gene + OFFSET)
@@ -143,7 +151,7 @@ if __name__ == '__main__':
     network_id = 0
 
     for file in os.listdir(FLAGS.networks_dir + 'human'):
-        if not file.endswith('adjacency.txt'):
+        if not use_file(file):
             continue
         print('Processing {} graph'.format(file))
         full_data = read_adjacency_file(
@@ -160,7 +168,7 @@ if __name__ == '__main__':
 
     network_id = 0
     for file in os.listdir(FLAGS.networks_dir + 'yeast'):
-        if not file.endswith('adjacency.txt'):
+        if not use_file(file):
             continue
         print('Processing {} graph'.format(file))
         full_data = read_adjacency_file(
